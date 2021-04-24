@@ -11,6 +11,8 @@ public interface PlayerService {
 
     List<Player> getPlayerList();
 
+    List<Player> getPlayerList(Team team);
+
     List<Player> getWaitList();
 
     void addToList(Player player);

@@ -2,7 +2,6 @@ package com.kovunov.service;
 
 import com.kovunov.entity.Player;
 import com.kovunov.entity.PlayerUpdateDto;
-import com.kovunov.entity.Request;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

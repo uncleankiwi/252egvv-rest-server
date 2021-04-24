@@ -48,7 +48,7 @@ public class PlayerResource {
         if (updateDto.getId() == null || updateDto.getId() == 0) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("{\n" +
-                            "\t\"error\": \"Please provide corrwect id\"\n" +
+                            "\t\"error\": \"Please provide correct id\"\n" +
                             "}").build();
         }
         Player playerToUpdate = playerService.getById(updateDto.getId());

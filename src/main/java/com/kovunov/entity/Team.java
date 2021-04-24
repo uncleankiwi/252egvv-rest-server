@@ -13,6 +13,7 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@NamedQuery(name = "Team.findAll", query = "SELECT t FROM Team t")
 public class Team {
 	@Id
 	@GeneratedValue(generator = "Team")

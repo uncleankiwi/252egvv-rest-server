@@ -1,8 +1,6 @@
 package com.kovunov.rest;
 
-import com.kovunov.entity.Player;
 import com.kovunov.entity.Team;
-import com.kovunov.service.PlayerService;
 import com.kovunov.service.TeamService;
 
 import javax.ejb.EJB;
@@ -29,6 +27,14 @@ public class TeamResource {
 		teamService.createTeam(team);
 		return Response.status(Response.Status.CREATED)
 				.entity(team)
+				.build();
+	}
+
+	@GET
+	@Produces({APPLICATION_JSON})
+	public Response getAllTeams() {
+		return Response.ok()
+				.entity(teamService.getTeamList())
 				.build();
 	}
 }

@@ -6,6 +6,8 @@ import com.kovunov.entity.Team;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Stateless
 public class TeamServiceImpl implements TeamService {
@@ -16,6 +18,12 @@ public class TeamServiceImpl implements TeamService {
 	@Override
 	public void createTeam(Team team) {
 		em.persist(team);
+	}
+
+	@Override
+	public List<Team> getTeamList() {
+		return em.createNamedQuery("Team.findAll", Team.class)
+				.getResultList();
 	}
 
 	@Override

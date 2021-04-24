@@ -2,6 +2,7 @@ package com.kovunov.service;
 
 import com.kovunov.entity.Player;
 import com.kovunov.entity.PlayerUpdateDto;
+import com.kovunov.entity.Team;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -58,6 +59,13 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
+    public List<Player> getPlayerListByTeam(Team team) {
+        return em.createNamedQuery("Player.findAllByTeam", Player.class)
+                .setParameter("teamId", team.getId())
+                .getResultList();
+    }
+
+    @Override
     public Player getById(Long id) {
         return em.find(Player.class, id);
     }
@@ -103,22 +111,6 @@ public class PlayerServiceImpl implements PlayerService {
                 .setParameter("userName", player.getUserName())
                 .getSingleResult();
         em.remove(correspondingPlayer);
-    }
-
-    @Override
-    public void addPlayerRequest(String userName, Request request) {
-        Player correspondingPlayer = em
-                .createNamedQuery("Player.getByUserName", Player.class)
-                .setParameter("userName", userName)
-                .getSingleResult();
-        request.setPlayer(correspondingPlayer);
-        em.persist(request);
-    }
-
-    @Override
-    public List<Request> getAllRequests() {
-        return em.createNamedQuery("Request.findAll", Request.class)
-                .getResultList();
     }
 
 }

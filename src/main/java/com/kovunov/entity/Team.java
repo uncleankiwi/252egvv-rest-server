@@ -13,9 +13,10 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@NamedQuery(name = "Team.findAll", query = "SELECT t FROM Team t")
 public class Team {
 	@Id
-	@GeneratedValue(generator = "Team")
+	@GeneratedValue(generator = "TEAM_ID_GEN")
 	private Long id;
 
 	@OneToMany(mappedBy = "team", fetch = FetchType.EAGER)

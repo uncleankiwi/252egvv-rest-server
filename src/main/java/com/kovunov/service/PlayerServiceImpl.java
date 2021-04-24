@@ -60,7 +60,6 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public List<Player> getPlayerListByTeam(Team team) {
-
         return em.createNamedQuery("Player.findAllByTeam", Player.class)
                 .setParameter("teamId", team.getId())
                 .getResultList();

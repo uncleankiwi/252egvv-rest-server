@@ -2,7 +2,9 @@ package com.kovunov.rest;
 
 import com.kovunov.entity.Player;
 import com.kovunov.entity.PlayerUpdateDto;
+import com.kovunov.entity.Team;
 import com.kovunov.service.PlayerService;
+import com.kovunov.service.TeamService;
 import org.json.JSONObject;
 
 import javax.ejb.EJB;
@@ -34,6 +36,19 @@ public class PlayerResource {
     }
 
 
+    @GET
+    @Consumes({APPLICATION_JSON})
+    @Produces({APPLICATION_JSON})
+    public Response getAllPlayersByTeam(Team team) {
+        if (team.getId() == null || team.getId() <= 0) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("{\"Error\":\"Please provide a valid team id\"}")
+                    .build();
+        }
+        return Response.ok()
+                .entity(playerService.getPlayerListByTeam(team))
+                .build();
+    }
 
     @GET
     @Produces({APPLICATION_JSON})

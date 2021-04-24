@@ -3,10 +3,19 @@ package com.kovunov.service;
 import com.kovunov.entity.Player;
 import com.kovunov.entity.Team;
 
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+@Stateless
 public class TeamServiceImpl implements TeamService {
+
+	@PersistenceContext
+	private EntityManager em;
+
 	@Override
 	public void createTeam(Team team) {
-
+		em.persist(team);
 	}
 
 	@Override
@@ -17,5 +26,10 @@ public class TeamServiceImpl implements TeamService {
 	@Override
 	public void updateTeamName(String name) {
 
+	}
+
+	@Override
+	public Team getById(Long id) {
+		return em.find(Team.class, id);
 	}
 }

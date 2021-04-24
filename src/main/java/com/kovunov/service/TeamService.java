@@ -7,4 +7,5 @@ public interface TeamService {
 	void createTeam(Team team);
 	void addPlayerToTeam(Player player);
 	void updateTeamName(String name);
+	Team getById(Long id);
 }

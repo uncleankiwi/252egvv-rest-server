@@ -15,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @NamedQuery(name = "Player.findAll", query = "SELECT p FROM Player p")
+@NamedQuery(name = "Player.findAllByTeam", query = "SELECT p FROM Player p WHERE p.team.id = :teamId")
 @NamedQuery(name = "Player.getByUserName", query = "SELECT p from Player p where p.userName = :userName")
 @NamedQuery(name = "Player.clearAll", query = "DELETE FROM Player")
 public class Player implements Comparable<Player>, Serializable {

@@ -2,6 +2,7 @@ package com.kovunov.service;
 
 import com.kovunov.entity.Player;
 import com.kovunov.entity.PlayerUpdateDto;
+import com.kovunov.entity.Team;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface PlayerService {
 
     List<Player> getPlayerList();
 
-    List<Player> getPlayerList(Team team);
+    List<Player> getPlayerListByTeam(Team team);
 
     List<Player> getWaitList();
 
@@ -18,6 +19,4 @@ public interface PlayerService {
     void removeFromList(Player player);
     Player getById(Long id);
     Player updatePlayer(PlayerUpdateDto dto, Player playerToUpdate);
-    void addPlayerRequest(String userName, Request request);
-    List<Request> getAllRequests();
 }

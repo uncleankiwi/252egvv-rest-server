@@ -1,10 +1,7 @@
 package com.kovunov.rest;
 
-import com.kovunov.entity.Player;
-import com.kovunov.entity.PlayerTeamUpdateDto;
-import com.kovunov.entity.PlayerUpdateDto;
 import com.kovunov.entity.Team;
-import com.kovunov.service.PlayerService;
+import com.kovunov.entity.TeamUpdateDto;
 import com.kovunov.service.TeamService;
 
 import javax.ejb.EJB;
@@ -23,8 +20,6 @@ public class TeamResource {
 	public Response ping() {
 		return Response.ok().entity("Service is working").build();
 	}
-	@EJB
-	private PlayerService playerService;
 
 	@POST
 	@Consumes({APPLICATION_JSON})
@@ -44,35 +39,25 @@ public class TeamResource {
 				.build();
 	}
 
-	@Path("/updateplayerteam")
-	@PUT
-	@Consumes({APPLICATION_JSON})
-	@Produces({APPLICATION_JSON})
-	//asa
-	public Response updatePlayerTeam(PlayerTeamUpdateDto updateDto) {
-		if (updateDto.getId() == null || updateDto.getId() == 0 || updateDto.getTeam().getId() == null || updateDto.getTeam().getId() ==0) {
+    @PUT
+    @Consumes({APPLICATION_JSON})
+    @Produces({APPLICATION_JSON})
+	public Response updateTeamName(TeamUpdateDto updateDto) {
+		if (updateDto.getId() == null || updateDto.getId() == 0) {
 			return Response.status(Response.Status.BAD_REQUEST)
 					.entity("{\n" +
-							"\t\"error\": \"Please provide correct id(s)\"\n" +
+							"\t\"error\": \"Please provide correct id\"\n" +
 							"}").build();
 		}
-		Player playerToUpdate = playerService.getById(updateDto.getId());
-		Team dbTeam =  teamService.getById(updateDto.getTeam().getId());
-		if (dbTeam == null) {
-			return Response.status(Response.Status.BAD_REQUEST)
-					.entity("{\"Error\":\"No team with id " + updateDto.getTeam().getId() + " exists\"}")
-					.build();
-		}
-		if (playerToUpdate == null) {
+		Team teamToUpdate = teamService.getById(updateDto.getId());
+		if (teamToUpdate == null) {
 			return Response.status(Response.Status.BAD_REQUEST)
 					.entity("{\n" +
-							"\t\"error\": \"No such player\"\n" +
+							"\t\"error\": \"No such team\"\n" +
 							"}").build();
 		}
 		return Response.ok().entity(teamService.addPlayerToTeam(updateDto, playerToUpdate)).build();
 
+
 	}
-
-
-
 }

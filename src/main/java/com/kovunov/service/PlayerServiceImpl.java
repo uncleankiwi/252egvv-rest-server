@@ -105,6 +105,7 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     public void removeFromList(Player player) {
+        //Player playerWithId = em.find(Player.class, com.kovunov.player.getId());
         Player correspondingPlayer = em
                 .createNamedQuery("Player.getByUserName", Player.class)
                 .setParameter("userName", player.getUserName())

@@ -91,7 +91,15 @@ public class PlayerResource {
     @Consumes({APPLICATION_JSON})
     @Produces({APPLICATION_JSON})
     public Response createPlayer(Player player) {
-        playerService.addToList(player);
+        try {
+            playerService.addToList(player);
+        }
+        catch(Exception e) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("{\"Error\":\"User with username " + player.getUserName() + " already exists\"}")
+                    .build();
+        }
+
         return Response.status(Response.Status.CREATED).entity(player).build();
     }
 }

@@ -31,21 +31,9 @@ public class PlayerResource {
     @DELETE
     @Path("{id}")
     @Produces(TEXT_PLAIN)
-    public Response deletePlayer(@PathParam("id") Long id) {
-        if (id == null || id <= 0) {
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity("{\"Error\":\"" + id + " is not valid player id\"}")
-                    .build();
-        }
-        Player player = playerService.getById(id);
-        if (player == null) {
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity("{\"Error\":\"No player with id " + id + " exists\"}")
-                    .build();
-        }
-
-        playerService.removeFromList(player);
-        return Response.ok().entity("Player " + id + " deleted").build();
+    public Response deletePlayer(@PathParam("id") long id) {
+        playerService.removeFromList(playerService.getById(id));
+        return Response.ok().entity("player deleted").build();
     }
 
 
@@ -103,15 +91,7 @@ public class PlayerResource {
     @Consumes({APPLICATION_JSON})
     @Produces({APPLICATION_JSON})
     public Response createPlayer(Player player) {
-        try {
-            playerService.addToList(player);
-        }
-        catch(Exception e) {
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity("{\"Error\":\"User with username " + player.getUserName() + " already exists\"}")
-                    .build();
-        }
-
+        playerService.addToList(player);
         return Response.status(Response.Status.CREATED).entity(player).build();
     }
 }

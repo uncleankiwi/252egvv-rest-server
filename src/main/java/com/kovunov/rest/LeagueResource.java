@@ -1,8 +1,10 @@
 package com.kovunov.rest;
 
 import com.kovunov.entity.League;
+import com.kovunov.entity.Player;
 import com.kovunov.entity.Team;
 import com.kovunov.service.LeagueService;
+import com.kovunov.service.TeamService;
 
 import javax.ejb.EJB;
 import javax.ws.rs.*;
@@ -16,6 +18,9 @@ public class LeagueResource {
 
 	@EJB
 	LeagueService leagueService;
+
+	@EJB
+	TeamService teamService;
 
 	@GET
 	@Path("/ping")
@@ -35,15 +40,26 @@ public class LeagueResource {
 	@Path("{id}")
 	@Consumes({APPLICATION_JSON})
 	@Produces(TEXT_PLAIN)
-	public Response addTeamToLeague(@PathParam("id") long id, Team team) {
-		try {
-			leagueService.addTeamToLeague(id, team);
-		} catch (Exception e) {
+	public Response addTeamToLeague(@PathParam("id") Long id, Team team) {
+		if (id == null || id == 0) {
 			return Response.status(Response.Status.BAD_REQUEST)
-					.entity(e.getMessage())
+					.entity("{\n" +
+							"\t\"error\": \"Please provide a valid league id\"\n" +
+							"}").build();
+		}
+		Team dbTeam = teamService.getById(team.getId());
+		League league =  leagueService.getById(id);
+		if (league == null) {
+			return Response.status(Response.Status.BAD_REQUEST)
+					.entity("{\"Error\":\"No league with id " + id + " exists\"}")
 					.build();
 		}
-
+		if (dbTeam == null) {
+			return Response.status(Response.Status.BAD_REQUEST)
+					.entity("{\"Error\":\"No team with id " + team.getId() + " exists\"}")
+					.build();
+		}
+		leagueService.addTeamToLeague(id, team);
 		return Response.ok()
 				.entity("Added team id " + team.getId() + " to league id " + id)
 				.build();

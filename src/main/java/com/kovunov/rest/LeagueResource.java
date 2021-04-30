@@ -1,7 +1,6 @@
 package com.kovunov.rest;
 
 import com.kovunov.entity.League;
-import com.kovunov.entity.Player;
 import com.kovunov.entity.Team;
 import com.kovunov.service.LeagueService;
 import com.kovunov.service.TeamService;

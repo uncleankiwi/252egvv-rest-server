@@ -3,12 +3,18 @@ package com.kovunov.service;
 import com.kovunov.entity.League;
 import com.kovunov.entity.Team;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
+
 
 @Stateless
 public class LeagueServiceImpl implements LeagueService{
+
+	@EJB
+	private TeamService teamService;
 
 	@PersistenceContext
 	private EntityManager em;
@@ -18,13 +24,16 @@ public class LeagueServiceImpl implements LeagueService{
 		return em.find(League.class, id);
 	}
 
-	@Override
-	public void createLeague() {
-
+	public List<League> getLeagueList() {
+		return em.createNamedQuery("League.findAll", League.class)
+				.getResultList();
 	}
 
 	@Override
-	public void addTeamToLeague(Team team) {
-
+	public void addTeamToLeague(Long leagueId, Team team) {
+		League league = getById(leagueId);
+		Team teamToAdd = teamService.getById(team.getId());
+		teamToAdd.setLeague(league);
+		em.merge(teamToAdd);
 	}
 }

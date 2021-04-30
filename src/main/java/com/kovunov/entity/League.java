@@ -17,9 +17,20 @@ public class League {
 	@GeneratedValue(generator = "LEAGUE_ID_GEN")
 	private Long id;
 
+	private String name;
+
 	@OneToMany(mappedBy = "league", fetch = FetchType.EAGER)
 	private List<Team> teamList;
 
+	public League(Long id){
+		this.id = id;
+	}
 
-
+	@Override
+	public String toString() {
+		return "League{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				'}';
+	}
 }

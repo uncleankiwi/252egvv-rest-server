@@ -56,6 +56,8 @@ public class TeamResource {
 							"\t\"error\": \"No such team\"\n" +
 							"}").build();
 		}
-		return Response.ok().entity(teamService.updateTeamName(updateDto, teamToUpdate)).build();
+		return Response.ok().entity(teamService.addPlayerToTeam(updateDto, playerToUpdate)).build();
+
+
 	}
 }

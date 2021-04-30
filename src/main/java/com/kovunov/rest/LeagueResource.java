@@ -40,12 +40,19 @@ public class LeagueResource {
 	@Consumes({APPLICATION_JSON})
 	@Produces(TEXT_PLAIN)
 	public Response addTeamToLeague(@PathParam("id") Long id, Team team) {
-		if (id == null || id == 0) {
+		if (id == null || id <= 0) {
 			return Response.status(Response.Status.BAD_REQUEST)
 					.entity("{\n" +
 							"\t\"error\": \"Please provide a valid league id\"\n" +
 							"}").build();
 		}
+		if (team.getId() == null || team.getId() <= 0) {
+			return Response.status(Response.Status.BAD_REQUEST)
+					.entity("{\n" +
+							"\t\"error\": \"Please provide a valid team id\"\n" +
+							"}").build();
+		}
+
 		Team dbTeam = teamService.getById(team.getId());
 		League league =  leagueService.getById(id);
 		if (league == null) {

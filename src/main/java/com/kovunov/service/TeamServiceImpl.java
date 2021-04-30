@@ -44,8 +44,11 @@ public class TeamServiceImpl implements TeamService {
 
 
 	@Override
-	public void updateTeamName(String name) {
-
+	public Team updateTeamName(TeamUpdateDto dto, Team teamToUpdate) {
+		if (dto.getName() != null) {
+			teamToUpdate.setName(dto.getName());
+		}
+		return em.merge(teamToUpdate);
 	}
 
 	@Override

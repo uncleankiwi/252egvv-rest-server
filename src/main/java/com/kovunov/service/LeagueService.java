@@ -9,4 +9,5 @@ public interface LeagueService {
 	League getById(Long id);
 	List<League> getLeagueList();
 	void addTeamToLeague(Long leagueId, Team team);
+	void createLeague(League league);
 }

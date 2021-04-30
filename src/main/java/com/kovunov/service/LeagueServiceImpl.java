@@ -24,6 +24,11 @@ public class LeagueServiceImpl implements LeagueService{
 		return em.find(League.class, id);
 	}
 
+	@Override
+	public void createLeague(League league) {
+		em.persist(league);
+	}
+
 	public List<League> getLeagueList() {
 		return em.createNamedQuery("League.findAll", League.class)
 				.getResultList();

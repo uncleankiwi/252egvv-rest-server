@@ -1,8 +1,6 @@
 package com.kovunov.service;
 
-import com.kovunov.entity.League;
-import com.kovunov.entity.Player;
-import com.kovunov.entity.Team;
+import com.kovunov.entity.*;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -36,9 +34,14 @@ public class TeamServiceImpl implements TeamService {
 	}
 
 	@Override
-	public void addPlayerToTeam(Player player) {
+	public Player addPlayerToTeam(PlayerTeamUpdateDto dto, Player playerToUpdate) {
+
+		playerToUpdate.setTeam(dto.getTeam());
+		em.merge(playerToUpdate);
+		return playerToUpdate;
 
 	}
+
 
 	@Override
 	public void updateTeamName(String name) {

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface LeagueService {
 	League getById(Long id);
-	void createLeague(League league);
-	void addTeamToLeague(Long leagueId, Team team);
 	List<League> getLeagueList();
+	void addTeamToLeague(Long leagueId, Team team);
+	void createLeague(League league);
 }

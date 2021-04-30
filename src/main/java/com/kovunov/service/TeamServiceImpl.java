@@ -1,9 +1,8 @@
 package com.kovunov.service;
 
-import com.kovunov.entity.Player;
-import com.kovunov.entity.Team;
-import com.kovunov.entity.TeamUpdateDto;
+import com.kovunov.entity.*;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,8 +15,15 @@ public class TeamServiceImpl implements TeamService {
 	@PersistenceContext
 	private EntityManager em;
 
+	@EJB
+	private LeagueService leagueService;
+
 	@Override
 	public void createTeam(Team team) {
+		if (team.getLeague() != null) {
+			League league = leagueService.getById(team.getLeague().getId());
+			team.setLeague(league);
+		}
 		em.persist(team);
 	}
 
@@ -28,17 +34,21 @@ public class TeamServiceImpl implements TeamService {
 	}
 
 	@Override
-	public void addPlayerToTeam(Player player) {
+	public Player addPlayerToTeam(PlayerTeamUpdateDto dto, Player playerToUpdate) {
+
+		playerToUpdate.setTeam(dto.getTeam());
+		em.merge(playerToUpdate);
+		return playerToUpdate;
 
 	}
+
 
 	@Override
 	public Team updateTeamName(TeamUpdateDto dto, Team teamToUpdate) {
 		if (dto.getName() != null) {
 			teamToUpdate.setName(dto.getName());
 		}
-		em.merge(teamToUpdate);
-		return teamToUpdate;
+		return em.merge(teamToUpdate);
 	}
 
 	@Override
